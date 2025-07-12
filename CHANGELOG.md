@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.0.4 (2025-07-12)
+
+### Bug Fixes
+
+- Trete
+  ([`bd679f6`](https://github.com/synvex-ai/template-rooms-pkg/commit/bd679f6dd67c0895d9d55bbaab3cf3748bbd36f5))
+
+
 ## v1.0.3 (2025-07-12)
 
 
