@@ -36,14 +36,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           semantic-release version
-          echo "released=$(semantic-release print-version --current)" >> $GITHUB_OUTPUT
+          if git describe --tags --exact-match HEAD 2>/dev/null; then
+            echo "released=true" >> $GITHUB_OUTPUT
+          else
+            echo "released=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build package
-        if: steps.release.outputs.released != ''
+        if: steps.release.outputs.released == 'true'
         run: python -m build
 
       - name: Upload to Release
-        if: steps.release.outputs.released != ''
+        if: steps.release.outputs.released == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
