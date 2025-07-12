@@ -34,17 +34,17 @@ jobs:
         run: python -m build
 
       - name: Release
+        id: release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: semantic-release version && semantic-release publish
+        run: |
+          semantic-release version
+          semantic-release publish
 
-      - name: Upload Release Assets
-        if: steps.release.outcome == 'success'
-        uses: actions/upload-release-asset@v1
+      - name: Upload wheel to release
+        if: success()
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: dist/
-          asset_name: template-rooms-pkg-dist
-          asset_content_type: application/zip
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG=$(git describe --tags --exact-match HEAD)
+          gh release upload $TAG dist/*.whl dist/*.tar.gz
