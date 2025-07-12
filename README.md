@@ -4,7 +4,7 @@ A template Python package for the AI rooms script addon system.
 
 ## Overview
 
-This package provides a basic template implementation for creating addon packages that can be loaded by the AI rooms script. It includes a simple `test()` function that returns `True` when called.
+This package provides a basic template implementation for creating addon packages that can be loaded by the AI rooms script. It includes a simple `test()` function that returns `True` when called.c
 
 ## Installation
 
