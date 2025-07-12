@@ -27,24 +27,21 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install python-semantic-release build
+          pip install build
           pip install -e .
 
       - name: Build package
         run: python -m build
 
-      - name: Release
+      - name: Semantic Release
         id: release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          semantic-release version
-          semantic-release publish
+        uses: python-semantic-release/python-semantic-release@v9.10.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload wheel to release
-        if: success()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          TAG=$(git describe --tags --exact-match HEAD)
-          gh release upload $TAG dist/*.whl dist/*.tar.gz
+      - name: Publish to GitHub Release
+        uses: python-semantic-release/upload-to-gh-release@v9.10.0
+        if: steps.release.outputs.released == 'true'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.release.outputs.tag }}
