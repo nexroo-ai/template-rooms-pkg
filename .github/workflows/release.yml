@@ -30,10 +30,22 @@ jobs:
           pip install python-semantic-release build
           pip install -e .
 
-      - name: Build package
-        run: python -m build
-
       - name: Semantic Release
+        id: release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: semantic-release publish
+        run: |
+          semantic-release version
+          echo "released=$(semantic-release print-version --current)" >> $GITHUB_OUTPUT
+
+      - name: Build package
+        if: steps.release.outputs.released != ''
+        run: python -m build
+
+      - name: Upload to Release
+        if: steps.release.outputs.released != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG=$(git describe --tags --abbrev=0)
+          gh release upload $TAG dist/*.whl dist/*.tar.gz --clobber
