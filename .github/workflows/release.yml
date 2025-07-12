@@ -7,18 +7,17 @@ on:
 
 permissions:
   contents: write
-  issues: write
   pull-requests: write
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
+    concurrency: release
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # full history needed for version detection
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -28,28 +27,27 @@ jobs:
       - name: Install dependencies
         run: |
           pip install python-semantic-release build
-          pip install -e .
 
-      - name: Semantic Release
-        id: release
+      - name: Run Semantic Release
+        id: semantic
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # If publishing to PyPI, also: PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          semantic-release version
-          if git describe --tags --exact-match HEAD 2>/dev/null; then
-            echo "released=true" >> $GITHUB_OUTPUT
-          else
-            echo "released=false" >> $GITHUB_OUTPUT
-          fi
+          # configure git user so version commit succeeds
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          semantic-release publish --yes
+          echo "released=${{ steps.semantic.outcome == 'success' }}" >> $GITHUB_OUTPUT
 
       - name: Build package
-        if: steps.release.outputs.released == 'true'
+        if: steps.semantic.outputs.released == 'true'
         run: python -m build
 
-      - name: Upload to Release
-        if: steps.release.outputs.released == 'true'
+      - name: Upload to GitHub release
+        if: steps.semantic.outputs.released == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG=$(git describe --tags --abbrev=0)
-          gh release upload $TAG dist/*.whl dist/*.tar.gz --clobber
+          gh release upload "$TAG" dist/* --clobber
