@@ -27,10 +27,24 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install python-semantic-release
+          pip install python-semantic-release build
           pip install -e .
+
+      - name: Build package
+        run: python -m build
 
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: semantic-release version && semantic-release publish
+
+      - name: Upload Release Assets
+        if: steps.release.outcome == 'success'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: dist/
+          asset_name: template-rooms-pkg-dist
+          asset_content_type: application/zip
