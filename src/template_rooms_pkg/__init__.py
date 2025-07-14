@@ -12,9 +12,9 @@ Returns:
     bool: True if test passes, False otherwise
 """
 def test() -> bool:
-    logger.info("Running template-rooms-pkg comprehensive test...")
+    logger.info("Running template-rooms-pkg test...")
     
-    modules = ["actions", "configuration", "memory", "services", "tools", "utils"]
+    modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
     total_components = 0
     for module_name in modules:
         try:
