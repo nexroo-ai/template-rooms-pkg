@@ -42,7 +42,10 @@ To create a new addon package using this template:
 3. **Update the addon class:**
    - Rename `TemplateRoomsAddon` to `{YourAddonName}RoomsAddon` in `addon.py`
    - Customize the `test()` method and add your addon functionality
-4. **Update documentation:**
+4. **Create configuration schema:**
+   - Define your addon's configuration schema in `configuration/` directory
+   - Inherit from `BaseAddonConfig` for validation
+5. **Update documentation:**
    - Modify this README.md with your addon's specific information
    - Update the CHANGELOG.md
 
@@ -80,6 +83,77 @@ The project uses semantic release for automated versioning and publishing:
    - Generates changelog
    - Creates GitHub release
    - Publishes to PyPI (if configured)
+
+## Addon Configuration
+
+### Setup Configuration Schema
+
+1. **Create your config class** in `configuration/addonconfig.py`:
+
+```python
+from pydantic import Field, model_validator
+from template_rooms_pkg.configuration.baseconfig import BaseAddonConfig
+
+class CustomAddonConfig(BaseAddonConfig):
+    type: str = Field("your_addon_type", description="Your addon type")
+    
+    # Add required fields
+    required_field: str = Field(..., description="Required field")
+    
+    # Add optional fields with defaults
+    optional_field: int = Field(30, description="Optional field")
+    
+    @model_validator(mode='after')
+    def validate_configuration(self):
+        # Validate required secrets
+        if "required_secret" not in self.secrets:
+            raise ValueError("required_secret is missing")
+        
+        # Add custom validation
+        if self.optional_field < 0:
+            raise ValueError("optional_field must be positive")
+            
+        return self
+```
+
+2. **Update** `configuration/__init__.py`:
+
+```python
+from .baseconfig import BaseAddonConfig
+from .your_addon_config import CustomAddonConfig
+
+__all__ = ["BaseAddonConfig", "CustomAddonConfig"]
+```
+
+### Examples
+
+See `configuration/examples/` for reference implementations:
+- `llm_config.py` - LLM addon configuration
+- `database_config.py` - Database addon configuration  
+- `api_config.py` - API addon configuration
+
+### JSON Configuration
+
+The main script will validate this JSON against your schema:
+
+```json
+{
+    "id": "your-addon-1",
+    "type": "your_addon_type",
+    "name": "Your Addon",
+    "description": "Your addon description",
+    "enabled": true,
+    "required_field": "value",
+    "optional_field": 60,
+    "config": {
+        "extra_setting": "value"
+    },
+    "secrets": {
+        "required_secret": "ENV_VAR_NAME"
+    }
+}
+```
+
 
 ## Development
 

@@ -1,3 +1,4 @@
-from .example import demo_config
+from .baseconfig import BaseAddonConfig
+from .addonconfig import CustomAddonConfig
 
-__all__ = ["demo_config"]
+__all__ = ["BaseAddonConfig", "AddonConfig", "CustomAddonConfig", "LLMAddonConfig"]
