@@ -12,7 +12,6 @@ class TemplateRoomsAddon:
     """
     
     def __init__(self):
-        """Initialize the Template Rooms Addon."""
         self.modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
         
     def test(self) -> bool:
@@ -38,7 +37,6 @@ class TemplateRoomsAddon:
                         component = getattr(module, component_name)
                         if callable(component):
                             try:
-                                # Skip Pydantic model classes to avoid validation errors
                                 try:
                                     from pydantic import BaseModel
                                     if hasattr(component, '__bases__') and any(
