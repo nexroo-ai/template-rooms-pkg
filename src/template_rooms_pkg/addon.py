@@ -1,6 +1,5 @@
 import os
 import importlib
-from typing import Dict, Any, Optional
 from loguru import logger
 
 
@@ -12,31 +11,9 @@ class TemplateRoomsAddon:
     and can be instantiated by external programs using this package.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self):
+        """Initialize the Template Rooms Addon."""
         self.modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
-        self.config = config or {}
-        self.validated_config = None
-        if config:
-            self._validate_config(config)
-    
-    def _validate_config(self, config: Dict[str, Any]) -> None:
-        try:
-            from .configuration.baseconfig import BaseAddonConfig
-            try:
-                from .configuration.addonconfig import CustomAddonConfig
-                config_class = CustomAddonConfig
-                logger.debug(f"Using CustomAddonConfig for validation")
-            except ImportError:
-                config_class = BaseAddonConfig
-                logger.debug(f"CustomAddonConfig not found, using BaseAddonConfig")
-            
-            validated_config = config_class(**config)
-            self.validated_config = validated_config
-            logger.info(f"Configuration validated successfully for addon {config.get('id', 'unknown')}")
-            
-        except Exception as e:
-            logger.error(f"Configuration validation failed for addon {config.get('id', 'unknown')}: {e}")
-            raise
         
     def test(self) -> bool:
         """
