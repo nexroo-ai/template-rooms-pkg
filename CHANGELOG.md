@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.2 (2025-07-15)
+
+### Bug Fixes
+
+- Debug validation
+  ([`c6f1251`](https://github.com/synvex-ai/template-rooms-pkg/commit/c6f12517033f22c9c674d1480064b6c2dd7d70dd))
+
+
 ## v1.1.1 (2025-07-15)
 
 ### Bug Fixes
