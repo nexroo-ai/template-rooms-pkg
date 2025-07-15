@@ -39,11 +39,16 @@ class TemplateRoomsAddon:
                         if callable(component):
                             try:
                                 # Skip Pydantic model classes to avoid validation errors
-                                if hasattr(component, '__bases__') and any(
-                                    'BaseModel' in str(base) for base in component.__bases__
-                                ):
-                                    logger.debug(f"Component {component_name} is a Pydantic model, skipping instantiation")
-                                    continue
+                                try:
+                                    from pydantic import BaseModel
+                                    if hasattr(component, '__bases__') and any(
+                                        issubclass(base, BaseModel) for base in component.__bases__ if isinstance(base, type)
+                                    ):
+                                        logger.debug(f"Component {component_name} is a Pydantic model, skipping instantiation")
+                                        continue
+                                except (ImportError, TypeError):
+                                    pass
+                                
                                 result = component()
                                 logger.debug(f"Component {component_name}() executed successfully")
                             except Exception as e:
