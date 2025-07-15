@@ -92,7 +92,7 @@ The project uses semantic release for automated versioning and publishing:
 
 ```python
 from pydantic import Field, model_validator
-from template_rooms_pkg.configuration.baseconfig import BaseAddonConfig
+from .baseconfig import BaseAddonConfig
 
 class CustomAddonConfig(BaseAddonConfig):
     type: str = Field("your_addon_type", description="Your addon type")
@@ -120,7 +120,7 @@ class CustomAddonConfig(BaseAddonConfig):
 
 ```python
 from .baseconfig import BaseAddonConfig
-from .your_addon_config import CustomAddonConfig
+from .addonconfig import CustomAddonConfig
 
 __all__ = ["BaseAddonConfig", "CustomAddonConfig"]
 ```
@@ -134,7 +134,7 @@ See `configuration/examples/` for reference implementations:
 
 ### JSON Configuration
 
-The main script will validate this JSON against your schema:
+The AI rooms script automatically validates this JSON against your schema during addon loading:
 
 ```json
 {
@@ -154,6 +154,38 @@ The main script will validate this JSON against your schema:
 }
 ```
 
+## Configuration Validation
+
+The AI rooms script automatically handles configuration validation:
+
+1. **Automatic Discovery**: The script automatically discovers your `CustomAddonConfig` class from `configuration/addonconfig.py`
+2. **Validation During Loading**: Configuration is validated when the addon is loaded by the AI rooms script
+3. **Error Reporting**: Detailed validation errors are displayed if configuration is invalid
+4. **Fallback Support**: If `CustomAddonConfig` is not found, falls back to `BaseAddonConfig`
+
+### Validation Process
+
+```python
+# The AI rooms script automatically does this:
+from your_addon_rooms_pkg.configuration.addonconfig import CustomAddonConfig
+
+# Validates your JSON configuration
+validated_config = CustomAddonConfig(**your_json_config)
+```
+
+### Configuration Fields
+
+All addon configurations inherit from `BaseAddonConfig` which provides:
+
+- `id`: Unique identifier for the addon
+- `type`: Type of the addon  
+- `name`: Display name of the addon
+- `description`: Description of the addon
+- `enabled`: Whether the addon is enabled
+- `config`: General configuration settings (Dict)
+- `secrets`: Environment variable names for secrets (Dict)
+
+Your `CustomAddonConfig` can add additional required or optional fields as needed.
 
 ## Development
 

@@ -3,11 +3,13 @@ from .baseconfig import BaseAddonConfig
 
 
 class CustomAddonConfig(BaseAddonConfig):
-    # database example    
+    # database example
     type: str = Field("database", description="Database addon type")
     # Required database fields
     host: str = Field(..., description="Database host")
     database: str = Field(..., description="Database name")
+    
+    # Default (not required) fields
     port: int = Field(5432, description="Database port")
     
     @model_validator(mode='after')
