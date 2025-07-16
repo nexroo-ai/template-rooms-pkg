@@ -2,6 +2,20 @@
 
 <!-- version list -->
 
+## v1.1.5 (2025-07-16)
+
+### Bug Fixes
+
+- Add linter ruff and pre-comit
+  ([`33b93b3`](https://github.com/synvex-ai/template-rooms-pkg/commit/33b93b3e1fdc2796093416f4b07176cd94977fb6))
+
+- Lint for main push
+  ([`496223f`](https://github.com/synvex-ai/template-rooms-pkg/commit/496223fe763015163519c09be9a847c0e710863f))
+
+- Pre-commit ok
+  ([`d8d5774`](https://github.com/synvex-ai/template-rooms-pkg/commit/d8d5774847ad0e3d3f2f91958902d6ebda7a1a2a))
+
+
 ## v1.1.4 (2025-07-15)
 
 ### Bug Fixes
