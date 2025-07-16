@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.6 (2025-07-16)
+
+### Bug Fixes
+
+- Add doc for code quality tools
+  ([`497aa16`](https://github.com/synvex-ai/template-rooms-pkg/commit/497aa16d517f578be00650ffde83600c9a56c5dd))
+
+
 ## v1.1.5 (2025-07-16)
 
 ### Bug Fixes
