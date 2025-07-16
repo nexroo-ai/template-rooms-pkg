@@ -1,4 +1,3 @@
-from typing import List
 from pydantic import Field, model_validator
 from ..baseconfig import BaseAddonConfig
 
