@@ -189,6 +189,32 @@ Your `CustomAddonConfig` can add additional required or optional fields as neede
 
 ## Development
 
+### Code Quality Tools
+
+This template includes automated code quality tools:
+
+- **Ruff**: Fast Python linter and formatter that replaces multiple tools (flake8, black, isort, etc.)
+- **Pre-commit**: Runs quality checks automatically before each commit to ensure consistent code quality
+
+#### Using Ruff
+```bash
+# Lint and format code
+ruff check .          # Check for linting issues
+ruff format .         # Format code automatically
+```
+
+#### Pre-commit Setup
+Pre-commit hooks are automatically installed when you install the package. They run Ruff checks before each commit:
+
+```bash
+# Manual pre-commit run
+pre-commit run --all-files
+```
+
+The hooks will automatically fix formatting issues and prevent commits with linting errors.
+
+### Release Process
+
 The project uses semantic release for automated versioning. Releases are triggered automatically on pushes to the main branch.
 
 ## License
