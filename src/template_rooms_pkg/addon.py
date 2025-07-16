@@ -1,7 +1,6 @@
 import importlib
 from loguru import logger
 
-
 class TemplateRoomsAddon:
     """
     Template Rooms Package Addon Class
