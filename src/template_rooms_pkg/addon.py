@@ -1,4 +1,3 @@
-import os
 import importlib
 from loguru import logger
 
@@ -47,7 +46,7 @@ class TemplateRoomsAddon:
                                 except (ImportError, TypeError):
                                     pass
                                 
-                                result = component()
+                                # result = component()
                                 logger.debug(f"Component {component_name}() executed successfully")
                             except Exception as e:
                                 logger.warning(f"Component {component_name}() failed: {e}")
@@ -58,6 +57,6 @@ class TemplateRoomsAddon:
             except Exception as e:
                 logger.error(f"Error testing {module_name}: {e}")
                 return False
-        logger.info(f"Template rooms package test completed successfully!")
+        logger.info("Template rooms package test completed successfully!")
         logger.info(f"Total components loaded: {total_components} across {len(self.modules)} modules")
         return True
