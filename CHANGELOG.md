@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v1.1.7 (2025-07-16)
+
+### Bug Fixes
+
+- Code of conduct
+  ([`096d63a`](https://github.com/synvex-ai/template-rooms-pkg/commit/096d63a84a048e659c50902b5cc94c17cdae1a34))
+
+- Oss markdown
+  ([`338f543`](https://github.com/synvex-ai/template-rooms-pkg/commit/338f543e6d8ff4dc584aa38a651b4c4cdd58e6e0))
+
+
 ## v1.1.6 (2025-07-16)
 
 ### Bug Fixes
