@@ -1,6 +1,6 @@
 import importlib
-from pathlib import Path
 from loguru import logger
+from .actions.example import example
 
 class TemplateRoomsAddon:
     """
@@ -12,60 +12,10 @@ class TemplateRoomsAddon:
     
     def __init__(self):
         self.modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
-        self._actions = {}
-        self._actions_loaded = False
     
-    def load_actions(self):
-        """Load all action functions from actions directory."""
-        if self._actions_loaded:
-            return
-            
-        try:
-            actions_dir = Path(__file__).parent / "actions"
-            
-            for file_path in actions_dir.glob("*.py"):
-                if file_path.name not in ["__init__.py", "base.py"]:
-                    module_name = file_path.stem
-                    try:
-                        module = importlib.import_module(f".actions.{module_name}", package=__name__.rsplit('.', 1)[0])
-                        # Only register function with same name as file
-                        if hasattr(module, module_name):
-                            action_func = getattr(module, module_name)
-                            if callable(action_func):
-                                self._actions[module_name] = action_func
-                                logger.debug(f"Loaded action: {module_name}")
-                    except ImportError as e:
-                        logger.warning(f"Failed to load action {module_name}: {e}")
-                    except Exception as e:
-                        logger.warning(f"Error loading action {module_name}: {e}")
-            
-            self._actions_loaded = True
-            logger.info(f"Loaded {len(self._actions)} actions from actions directory")
-        except Exception as e:
-            logger.error(f"Error during action loading: {e}")
-            self._actions_loaded = True  # Mark as loaded to prevent retry loops
-    
-    def __getattr__(self, name):
-        """Dynamically expose actions as methods."""
-        # Auto-load actions if not loaded yet
-        if not self._actions_loaded:
-            self.load_actions()
-            
-        if name in self._actions:
-            return self._actions[name]
-        raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")
-    
-    def get_actions(self):
-        """Get all available actions."""
-        if not self._actions_loaded:
-            self.load_actions()
-        return self._actions.copy()
-    
-    def list_actions(self):
-        """List all available action names."""
-        if not self._actions_loaded:
-            self.load_actions()
-        return list(self._actions.keys())
+    def example(self):
+        """Example action method."""
+        return example()
         
     def test(self) -> bool:
         """
