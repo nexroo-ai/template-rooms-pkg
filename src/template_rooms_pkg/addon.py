@@ -12,10 +12,11 @@ class TemplateRoomsAddon:
     
     def __init__(self):
         self.modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
+        self.config = {}
 
     # add your actions here    
-    def example(self):
-        return example()
+    def example(self, input: dict):
+        return example(self.config, input)
         
     def test(self) -> bool:
         """
@@ -64,3 +65,22 @@ class TemplateRoomsAddon:
         logger.info("Template rooms package test completed successfully!")
         logger.info(f"Total components loaded: {total_components} across {len(self.modules)} modules")
         return True
+    
+    def loadAddonConfig(self, addon_config: dict):
+        """
+        Load addon configuration.
+        
+        Args:
+            addon_config (dict): Addon configuration dictionary
+        
+        Returns:
+            bool: True if configuration is loaded successfully, False otherwise
+        """
+        try:
+            from template_rooms_pkg.configuration import CustomAddonConfig
+            self.config = CustomAddonConfig(**addon_config)
+            logger.info(f"Addon configuration loaded successfully: {self.config}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to load addon configuration: {e}")
+            return False
