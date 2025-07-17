@@ -1,4 +1,5 @@
 import importlib
+from pathlib import Path
 from loguru import logger
 
 class TemplateRoomsAddon:
@@ -11,6 +12,40 @@ class TemplateRoomsAddon:
     
     def __init__(self):
         self.modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
+        self._actions = {}
+        self._load_actions()
+    
+    def _load_actions(self):
+        """Load all action functions from actions directory."""
+        actions_dir = Path(__file__).parent / "actions"
+        
+        for file_path in actions_dir.glob("*.py"):
+            if file_path.name not in ["__init__.py", "base.py"]:
+                module_name = file_path.stem
+                try:
+                    module = importlib.import_module(f".actions.{module_name}", package=__name__.rsplit('.', 1)[0])
+                    # Only register function with same name as file
+                    if hasattr(module, module_name):
+                        action_func = getattr(module, module_name)
+                        if callable(action_func):
+                            self._actions[module_name] = action_func
+                            logger.debug(f"Loaded action: {module_name}")
+                except ImportError as e:
+                    logger.warning(f"Failed to load action {module_name}: {e}")
+    
+    def __getattr__(self, name):
+        """Dynamically expose actions as methods."""
+        if name in self._actions:
+            return self._actions[name]
+        raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")
+    
+    def get_actions(self):
+        """Get all available actions."""
+        return self._actions.copy()
+    
+    def list_actions(self):
+        """List all available action names."""
+        return list(self._actions.keys())
         
     def test(self) -> bool:
         """
