@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.15 (2025-07-17)
+
+### Bug Fixes
+
+- Param no dict
+  ([`dc6a568`](https://github.com/synvex-ai/template-rooms-pkg/commit/dc6a568fc01a08a2d10ad3e4968791a7f8de3b71))
+
+
 ## v1.1.14 (2025-07-17)
 
 ### Bug Fixes
