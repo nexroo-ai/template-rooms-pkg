@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.8 (2025-07-17)
+
+### Bug Fixes
+
+- Action define output
+  ([`1de1fe8`](https://github.com/synvex-ai/template-rooms-pkg/commit/1de1fe84b3b219c263f6c80d8efaffef090cc21d))
+
+
 ## v1.1.7 (2025-07-16)
 
 ### Bug Fixes
