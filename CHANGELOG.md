@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.9 (2025-07-17)
+
+### Bug Fixes
+
+- Action dynamic
+  ([`6ce0e7a`](https://github.com/synvex-ai/template-rooms-pkg/commit/6ce0e7aa963d12be67f99c274d8b7b6ab1653905))
+
+
 ## v1.1.8 (2025-07-17)
 
 ### Bug Fixes
