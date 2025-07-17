@@ -16,7 +16,7 @@ class TemplateRoomsAddon:
 
     # add your actions here    
     def example(self, input: dict):
-        return example(self.config, input)
+        return example(input)
         
     def test(self) -> bool:
         """
