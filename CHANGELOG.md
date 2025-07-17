@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v1.1.13 (2025-07-17)
+
+### Bug Fixes
+
+- Ex
+  ([`2542f80`](https://github.com/synvex-ai/template-rooms-pkg/commit/2542f807b737dd8137277e3f393056b06c07f581))
+
+- Input & config load
+  ([`4cacb1a`](https://github.com/synvex-ai/template-rooms-pkg/commit/4cacb1a7b8fb39473090d665a08f06fc808d74e4))
+
+
 ## v1.1.12 (2025-07-17)
 
 ### Bug Fixes
