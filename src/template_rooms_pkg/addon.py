@@ -20,24 +20,30 @@ class TemplateRoomsAddon:
         if self._actions_loaded:
             return
             
-        actions_dir = Path(__file__).parent / "actions"
-        
-        for file_path in actions_dir.glob("*.py"):
-            if file_path.name not in ["__init__.py", "base.py"]:
-                module_name = file_path.stem
-                try:
-                    module = importlib.import_module(f".actions.{module_name}", package=__name__.rsplit('.', 1)[0])
-                    # Only register function with same name as file
-                    if hasattr(module, module_name):
-                        action_func = getattr(module, module_name)
-                        if callable(action_func):
-                            self._actions[module_name] = action_func
-                            logger.debug(f"Loaded action: {module_name}")
-                except ImportError as e:
-                    logger.warning(f"Failed to load action {module_name}: {e}")
-        
-        self._actions_loaded = True
-        logger.info(f"Loaded {len(self._actions)} actions from actions directory")
+        try:
+            actions_dir = Path(__file__).parent / "actions"
+            
+            for file_path in actions_dir.glob("*.py"):
+                if file_path.name not in ["__init__.py", "base.py"]:
+                    module_name = file_path.stem
+                    try:
+                        module = importlib.import_module(f".actions.{module_name}", package=__name__.rsplit('.', 1)[0])
+                        # Only register function with same name as file
+                        if hasattr(module, module_name):
+                            action_func = getattr(module, module_name)
+                            if callable(action_func):
+                                self._actions[module_name] = action_func
+                                logger.debug(f"Loaded action: {module_name}")
+                    except ImportError as e:
+                        logger.warning(f"Failed to load action {module_name}: {e}")
+                    except Exception as e:
+                        logger.warning(f"Error loading action {module_name}: {e}")
+            
+            self._actions_loaded = True
+            logger.info(f"Loaded {len(self._actions)} actions from actions directory")
+        except Exception as e:
+            logger.error(f"Error during action loading: {e}")
+            self._actions_loaded = True  # Mark as loaded to prevent retry loops
     
     def __getattr__(self, name):
         """Dynamically expose actions as methods."""
