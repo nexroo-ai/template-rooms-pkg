@@ -14,6 +14,6 @@ class ActionOutput(OutputBase):
 def example() -> ActionResponse:
     logger.debug("Template rooms package - Example action executed successfully!")
     tokens = TokensSchema(stepAmount=2000, totalCurrentAmount=16236)
-    output = ActionOutput(data={"foo": "bar"})
+    output = ActionOutput(message="Action executed successfully", data={"foo": "bar"})
     message = "Action executed successfully"
     return ActionResponse(output=output, tokens=tokens, message=message)
