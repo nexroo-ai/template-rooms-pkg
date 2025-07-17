@@ -1,3 +1,3 @@
-from .example import demo_action
+from .example import example
 
-__all__ = ["demo_action"]
+__all__ = ["example"]
