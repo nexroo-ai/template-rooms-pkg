@@ -13,10 +13,13 @@ class TemplateRoomsAddon:
     def __init__(self):
         self.modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
         self._actions = {}
-        self._load_actions()
+        self._actions_loaded = False
     
-    def _load_actions(self):
+    def load_actions(self):
         """Load all action functions from actions directory."""
+        if self._actions_loaded:
+            return
+            
         actions_dir = Path(__file__).parent / "actions"
         
         for file_path in actions_dir.glob("*.py"):
@@ -32,19 +35,30 @@ class TemplateRoomsAddon:
                             logger.debug(f"Loaded action: {module_name}")
                 except ImportError as e:
                     logger.warning(f"Failed to load action {module_name}: {e}")
+        
+        self._actions_loaded = True
+        logger.info(f"Loaded {len(self._actions)} actions from actions directory")
     
     def __getattr__(self, name):
         """Dynamically expose actions as methods."""
+        # Auto-load actions if not loaded yet
+        if not self._actions_loaded:
+            self.load_actions()
+            
         if name in self._actions:
             return self._actions[name]
         raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")
     
     def get_actions(self):
         """Get all available actions."""
+        if not self._actions_loaded:
+            self.load_actions()
         return self._actions.copy()
     
     def list_actions(self):
         """List all available action names."""
+        if not self._actions_loaded:
+            self.load_actions()
         return list(self._actions.keys())
         
     def test(self) -> bool:
