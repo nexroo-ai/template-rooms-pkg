@@ -15,8 +15,8 @@ class TemplateRoomsAddon:
         self.config = {}
 
     # add your actions here    
-    def example(self, input: dict):
-        return example(input)
+    def example(self, param1: str, param2: str) -> dict:
+        return example(param1, param2)
         
     def test(self) -> bool:
         """
