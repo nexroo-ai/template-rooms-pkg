@@ -7,6 +7,7 @@ from .base import ActionResponse, OutputBase, TokensSchema
 class ActionOutput(OutputBase):
     message: str
     data: Optional[dict] = None
+    code: Optional[int] = None
 
 
 # entrypoint is always the same name as the action file name.
@@ -14,6 +15,5 @@ class ActionOutput(OutputBase):
 def example() -> ActionResponse:
     logger.debug("Template rooms package - Example action executed successfully!")
     tokens = TokensSchema(stepAmount=2000, totalCurrentAmount=16236)
-    output = ActionOutput(message="Action executed successfully", data={"foo": "bar"})
-    message = "Action executed successfully"
-    return ActionResponse(output=output, tokens=tokens, message=message)
+    output = ActionOutput(message="Action executed successfully", data={"foo": "bar"}, code=200)
+    return ActionResponse(output=output, tokens=tokens)
