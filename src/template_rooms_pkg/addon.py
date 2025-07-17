@@ -12,9 +12,9 @@ class TemplateRoomsAddon:
     
     def __init__(self):
         self.modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
-    
+
+    # add your actions here    
     def example(self):
-        """Example action method."""
         return example()
         
     def test(self) -> bool:
