@@ -12,6 +12,7 @@ class ActionOutput(OutputBase):
 # the script use the function name, to simplify we will use the same name as the file.
 def example(input: dict) -> ActionResponse:
     logger.debug("Template rooms package - Example action executed successfully!")
+    logger.debug(f"Input received: {input}")
     tokens = TokensSchema(stepAmount=2000, totalCurrentAmount=16236)
     message = "Action executed successfully"
     code = 200
