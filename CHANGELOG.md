@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.11 (2025-07-17)
+
+### Bug Fixes
+
+- Rollback
+  ([`d9dd182`](https://github.com/synvex-ai/template-rooms-pkg/commit/d9dd18288c5f704ee2b3c8699d9cabd9115d2899))
+
+
 ## v1.1.10 (2025-07-17)
 
 ### Bug Fixes
