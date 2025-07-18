@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.23 (2025-07-18)
+
+### Bug Fixes
+
+- Gné
+  ([`997f4e7`](https://github.com/synvex-ai/template-rooms-pkg/commit/997f4e76799286d32ae6ac3ee875507be112ca80))
+
+
 ## v1.1.22 (2025-07-18)
 
 ### Bug Fixes
