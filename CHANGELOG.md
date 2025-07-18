@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.26 (2025-07-18)
+
+### Bug Fixes
+
+- Nsm lp
+  ([`c0e3ba6`](https://github.com/synvex-ai/template-rooms-pkg/commit/c0e3ba6e36fe529e6dc9dc927f5527eb41c069e7))
+
+
 ## v1.1.25 (2025-07-18)
 
 ### Bug Fixes
