@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.17 (2025-07-18)
+
+### Bug Fixes
+
+- Rewind
+  ([`63b43e0`](https://github.com/synvex-ai/template-rooms-pkg/commit/63b43e048df7018bd5a6fef974664f3532e580a3))
+
+
 ## v1.1.16 (2025-07-18)
 
 ### Bug Fixes
