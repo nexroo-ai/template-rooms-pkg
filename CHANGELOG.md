@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.19 (2025-07-18)
+
+### Bug Fixes
+
+- Test no input
+  ([`9d6cb32`](https://github.com/synvex-ai/template-rooms-pkg/commit/9d6cb32dff6a51fd63b7aad585d0ce6344bc094c))
+
+
 ## v1.1.18 (2025-07-18)
 
 ### Bug Fixes
