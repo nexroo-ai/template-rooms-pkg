@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.18 (2025-07-18)
+
+### Bug Fixes
+
+- Define input as classs
+  ([`8f6ea0f`](https://github.com/synvex-ai/template-rooms-pkg/commit/8f6ea0f56b0ef8954110967dd5e84bbdde2f11bf))
+
+
 ## v1.1.17 (2025-07-18)
 
 ### Bug Fixes
