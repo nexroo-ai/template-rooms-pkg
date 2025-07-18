@@ -23,6 +23,7 @@ class TemplateRoomsAddon:
     def example(self, input: ExampleActionInput) -> dict:#-> ActionResponse:
         return example(input)
             
+
     def test(self) -> bool:
         logger.info("Running template-rooms-pkg test...")
         total_components = 0
@@ -43,29 +44,26 @@ class TemplateRoomsAddon:
                     if callable(component):
                         try:
                             sig = inspect.signature(component)
-                            # Skip functions/classes that require pydantic or any non-default params
+
+                            # Skip functions with required Pydantic input
                             if any(
                                 param.default is inspect.Parameter.empty and
-                                param.annotation != inspect.Parameter.empty and
+                                param.annotation and
                                 isinstance(param.annotation, type) and
                                 issubclass(param.annotation, BaseModel)
                                 for param in sig.parameters.values()
                             ):
-                                logger.debug(f"Skipping {component_name}: requires pydantic input")
+                                logger.debug(f"Skipping {component_name} due to required Pydantic input")
                                 continue
 
                             if len(sig.parameters) == 0:
-                                # Safe to execute
-                                try:
-                                    result = component()
-                                    logger.debug(f"{component_name}() executed successfully with result: {result}")
-                                except Exception as e:
-                                    logger.warning(f"Execution of {component_name}() failed: {e}")
+                                result = component()
+                                logger.debug(f"{component_name}() executed successfully with result: {result}")
                             else:
                                 logger.debug(f"Component {component_name} requires parameters, not calling")
 
                         except Exception as e:
-                            logger.warning(f"Error inspecting or calling {component_name}: {e}")
+                            logger.warning(f"Error inspecting/calling {component_name}: {e}")
                     else:
                         logger.debug(f"{component_name} is not callable")
 
@@ -75,12 +73,13 @@ class TemplateRoomsAddon:
                 logger.error(f"Failed to import module '{module_name}': {e}")
                 return False
             except Exception as e:
-                logger.error(f"Error processing module '{module_name}': {e}")
+                logger.error(f"Error testing module '{module_name}': {e}")
                 return False
 
         logger.info("Template rooms package test completed successfully!")
         logger.info(f"Total components loaded: {total_components} across {len(self.modules)} modules")
         return True
+
 
         
     def test_old(self) -> bool:
