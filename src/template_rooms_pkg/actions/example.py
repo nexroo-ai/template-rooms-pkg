@@ -15,7 +15,11 @@ class ActionOutput(OutputBase):
 
 # entrypoint is always the same name as the action file name.
 # the script use the function name, to simplify we will use the same name as the file.
-def example(input: ActionInput) -> ActionResponse:
+def example(param1: str, param2: str) -> ActionResponse:
+    ActionInput.validate({
+        "param1": param1,
+        "param2": param2
+    })
     logger.debug("Template rooms package - Example action executed successfully!")
     logger.debug(f"Input received: param1={input.param1}, param2={input.param2}")
     tokens = TokensSchema(stepAmount=2000, totalCurrentAmount=16236)
