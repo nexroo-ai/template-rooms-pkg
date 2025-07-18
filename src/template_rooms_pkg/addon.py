@@ -3,8 +3,6 @@ from loguru import logger
 from .actions.example import example
 # from .actions.base import ActionResponse
 from .actions.example import ActionInput as ExampleActionInput
-import inspect
-from pydantic import BaseModel
 
 class TemplateRoomsAddon:
     """
@@ -22,67 +20,8 @@ class TemplateRoomsAddon:
     # add your actions here  
     def example(self, input: ExampleActionInput) -> dict:#-> ActionResponse:
         return example(input)
-            
-
-    def test(self) -> bool:
-        logger.info("Running template-rooms-pkg test...")
-        total_components = 0
-
-        for module_name in self.modules:
-            try:
-                module = importlib.import_module(f"template_rooms_pkg.{module_name}")
-                components = getattr(module, '__all__', [])
-                component_count = len(components)
-                total_components += component_count
-
-                for component_name in components:
-                    if not hasattr(module, component_name):
-                        continue
-
-                    component = getattr(module, component_name)
-
-                    if callable(component):
-                        try:
-                            sig = inspect.signature(component)
-
-                            # Skip functions with required Pydantic input
-                            if any(
-                                param.default is inspect.Parameter.empty and
-                                param.annotation and
-                                isinstance(param.annotation, type) and
-                                issubclass(param.annotation, BaseModel)
-                                for param in sig.parameters.values()
-                            ):
-                                logger.debug(f"Skipping {component_name} due to required Pydantic input")
-                                continue
-
-                            if len(sig.parameters) == 0:
-                                result = component()
-                                logger.debug(f"{component_name}() executed successfully with result: {result}")
-                            else:
-                                logger.debug(f"Component {component_name} requires parameters, not calling")
-
-                        except Exception as e:
-                            logger.warning(f"Error inspecting/calling {component_name}: {e}")
-                    else:
-                        logger.debug(f"{component_name} is not callable")
-
-                logger.info(f"{component_count} from '{module_name}' loaded: {', '.join(components)}")
-
-            except ImportError as e:
-                logger.error(f"Failed to import module '{module_name}': {e}")
-                return False
-            except Exception as e:
-                logger.error(f"Error testing module '{module_name}': {e}")
-                return False
-
-        logger.info("Template rooms package test completed successfully!")
-        logger.info(f"Total components loaded: {total_components} across {len(self.modules)} modules")
-        return True
-
-
         
-    def test_old(self) -> bool:
+    def test(self) -> bool:
         """
         Test function for template rooms package.
         Tests each module and reports available components.
