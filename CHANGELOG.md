@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.22 (2025-07-18)
+
+### Bug Fixes
+
+- Adon
+  ([`f258b58`](https://github.com/synvex-ai/template-rooms-pkg/commit/f258b58909535ce7add012418dbbf1b1ef05859b))
+
+
 ## v1.1.21 (2025-07-18)
 
 ### Bug Fixes
