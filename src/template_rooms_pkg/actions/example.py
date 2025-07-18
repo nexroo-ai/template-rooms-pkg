@@ -15,7 +15,7 @@ class ActionOutput(OutputBase):
 
 # entrypoint is always the same name as the action file name.
 # the script use the function name, to simplify we will use the same name as the file.
-def example(self, param1: str, param2: str) -> ActionResponse:
+def example( param1: str, param2: str) -> ActionResponse:
     # ActionInput.validate({
     #     param1: param1,
     #     param2: param2
