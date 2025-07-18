@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.21 (2025-07-18)
+
+### Bug Fixes
+
+- Input validate in action fct
+  ([`abec99e`](https://github.com/synvex-ai/template-rooms-pkg/commit/abec99eda3210720fa05999c21624948b44f563b))
+
+
 ## v1.1.20 (2025-07-18)
 
 ### Bug Fixes
