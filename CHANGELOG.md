@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.16 (2025-07-18)
+
+### Bug Fixes
+
+- Test with action response data model
+  ([`ef3d17d`](https://github.com/synvex-ai/template-rooms-pkg/commit/ef3d17d4e1c72fff72cb0c6b3208602c992c284a))
+
+
 ## v1.1.15 (2025-07-17)
 
 ### Bug Fixes
