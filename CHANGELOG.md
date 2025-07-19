@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.36 (2025-07-19)
+
+### Bug Fixes
+
+- Nique
+  ([`8eef2d5`](https://github.com/synvex-ai/template-rooms-pkg/commit/8eef2d566a6689c896451b610bde2e28de11c2d9))
+
+
 ## v1.1.35 (2025-07-19)
 
 ### Bug Fixes
