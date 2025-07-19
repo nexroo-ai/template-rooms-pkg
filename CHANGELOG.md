@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.29 (2025-07-19)
+
+### Bug Fixes
+
+- Clean example
+  ([`ff3ffac`](https://github.com/synvex-ai/template-rooms-pkg/commit/ff3ffac5d8677d0573f9d353e128c9f998c48868))
+
+
 ## v1.1.28 (2025-07-19)
 
 ### Bug Fixes
