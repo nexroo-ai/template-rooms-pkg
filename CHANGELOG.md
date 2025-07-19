@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.2.3 (2025-07-19)
+
+### Bug Fixes
+
+- Return to stable
+  ([`a3a583f`](https://github.com/synvex-ai/template-rooms-pkg/commit/a3a583feeddd6db75fd536b482da4519701686cd))
+
+
 ## v1.2.2 (2025-07-19)
 
 ### Bug Fixes
