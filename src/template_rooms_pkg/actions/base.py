@@ -16,3 +16,4 @@ class ActionResponse(BaseModel):
     output: OutputBase
     tokens: TokensSchema
     message: Optional[str] = None
+    code: Optional[int] = None

@@ -55,7 +55,7 @@ class TemplateRoomsAddon:
                                 except (ImportError, TypeError):
                                     pass
                                 # skip models require parameters
-                                if component_name in ['ActionInput', 'ActionOutput', 'ActionResponse']:
+                                if component_name in ['ActionInput', 'ActionOutput', 'ActionResponse', 'OutputBase', 'TokensSchema']:
                                     logger.info(f"Component {component_name} requires parameters, skipping instantiation")
                                     skip_instantiation = True
                                 
