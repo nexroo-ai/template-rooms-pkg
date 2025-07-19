@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.3.1 (2025-07-19)
+
+### Bug Fixes
+
+- Debug creds/secrets
+  ([`e01acf9`](https://github.com/synvex-ai/template-rooms-pkg/commit/e01acf91dc598cb6980e61bb0a115584dca58f3d))
+
+
 ## v1.3.0 (2025-07-19)
 
 ### Features
