@@ -3,7 +3,6 @@ from typing import Optional
 from pydantic import BaseModel
 
 from .base import ActionResponse, OutputBase, TokensSchema
-# from template_rooms_pkg.configuration import CustomAddonConfig
 
 class ActionInput(BaseModel):
     param1: str
@@ -19,9 +18,8 @@ class ActionOutput(OutputBase):
 def example(inputs: ActionInput) -> ActionResponse:
     if not isinstance(inputs, ActionInput):
         raise ValueError("Invalid input type. Expected ActionInput.")
-    logger.info("Template rooms package - Example action executed successfully!")
-    logger.info(f"Input received: {inputs}")
-    # example of return response to fit the ActionResponse model
+    logger.debug("Template rooms package - Example action executed successfully!")
+    logger.debug(f"Input received: {inputs}")
     tokens = TokensSchema(stepAmount=2000, totalCurrentAmount=16236)
     message = "Action executed successfully"
     code = 200
