@@ -10,9 +10,7 @@ class ActionInput(BaseModel):
     param2: str
 
 class ActionOutput(OutputBase):
-    message: str
     data: Optional[dict] = None
-    code: Optional[int] = None
 
 # entrypoint is always the same name as the action file name.
 # the script use the function name, to simplify we will use the same name as the file.
@@ -24,5 +22,5 @@ def example(config: CustomAddonConfig, param1: str, param2: str) -> ActionRespon
     tokens = TokensSchema(stepAmount=2000, totalCurrentAmount=16236)
     message = "Action executed successfully"
     code = 200
-    output = ActionOutput(message=message, data={"foo": "bar"}, code=code)
-    return ActionResponse(output=output, tokens=tokens)
+    output = ActionOutput(data={"foo": "bar"})
+    return ActionResponse(output=output, tokens=tokens, message=message, code=code)
