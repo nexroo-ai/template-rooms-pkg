@@ -1,6 +1,7 @@
 import importlib
 from loguru import logger
 from .actions.example import example
+from .services.credentials import CredentialsRegistry
 
 class TemplateRoomsAddon:
     """
@@ -13,6 +14,7 @@ class TemplateRoomsAddon:
     def __init__(self):
         self.modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
         self.config = {}
+        self.credentials = CredentialsRegistry()
 
     # add your actions here  
     def example(self, param1: str, param2: str) -> dict:
@@ -95,4 +97,29 @@ class TemplateRoomsAddon:
             return True
         except Exception as e:
             logger.error(f"Failed to load addon configuration: {e}")
+            return False
+
+    def loadCredentials(self, **kwargs) -> bool:
+        """
+        Load credentials and store them in the credentials registry.
+        Takes individual secrets as keyword arguments for validation.
+        
+        Args:
+            **kwargs: Individual credential key-value pairs
+        
+        Returns:
+            bool: True if credentials are loaded successfully, False otherwise
+        """
+        try:
+            if self.config and hasattr(self.config, 'secrets'):
+                required_secrets = list(self.config.secrets.keys())
+                missing_secrets = [secret for secret in required_secrets if secret not in kwargs]
+                if missing_secrets:
+                    raise ValueError(f"Missing required secrets: {missing_secrets}")
+            
+            self.credentials.store_multiple(kwargs)
+            logger.info(f"Loaded {len(kwargs)} credentials successfully")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to load credentials: {e}")
             return False

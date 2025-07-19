@@ -187,6 +187,169 @@ All addon configurations inherit from `BaseAddonConfig` which provides:
 
 Your `CustomAddonConfig` can add additional required or optional fields as needed.
 
+## Credentials Configuration
+
+When your addon requires secrets (API keys, passwords, etc.), configure them in your `CustomAddonConfig`:
+
+### 1. Define Required Secrets
+
+Use the `@model_validator` to specify which secrets your addon needs:
+
+```python
+from pydantic import Field, model_validator
+from .baseconfig import BaseAddonConfig
+
+class CustomAddonConfig(BaseAddonConfig):
+    type: str = Field("your_addon_type", description="Your addon type")
+    
+    # Your addon fields...
+    host: str = Field(..., description="Database host")
+    
+    @model_validator(mode='after')
+    def validate_secrets(self):
+        # Define required secrets for your addon
+        required_secrets = ["db_password", "db_user", "api_key"]
+        missing = [s for s in required_secrets if s not in self.secrets]
+        if missing:
+            raise ValueError(f"Missing required secrets: {missing}")
+        return self
+```
+
+### 2. Using Credentials in Actions
+
+Access stored credentials from any action using the `CredentialsRegistry`:
+
+```python
+from template_rooms_pkg.services.credentials import CredentialsRegistry
+
+def your_action(config: CustomAddonConfig, param1: str) -> ActionResponse:
+    credentials = CredentialsRegistry()
+    
+    # Get required credentials
+    db_password = credentials.get("db_password")
+    api_key = credentials.get("api_key")
+    
+    # Check if credential exists before using
+    if credentials.has("optional_secret"):
+        optional_value = credentials.get("optional_secret")
+    
+    # Use credentials in your logic
+    # ...
+```
+
+### 3. JSON Configuration Example
+
+In your addon's JSON configuration, specify the environment variable names in the `secrets` field:
+
+```json
+{
+    "id": "my-addon-1",
+    "type": "your_addon_type", 
+    "name": "My Addon",
+    "description": "My addon description",
+    "host": "localhost",
+    "secrets": {
+        "db_password": "DATABASE_PASSWORD",
+        "db_user": "DATABASE_USER", 
+        "api_key": "MY_API_KEY"
+    }
+}
+```
+
+The ai-rooms service will read the environment variables (`DATABASE_PASSWORD`, `DATABASE_USER`, `MY_API_KEY`) and pass their actual values to your addon.
+
+### Credentials Registry API
+
+The `CredentialsRegistry` provides these methods for accessing credentials:
+
+- `get(key: str) -> Optional[str]` - Retrieve credential value
+- `has(key: str) -> bool` - Check if credential exists  
+- `keys() -> list` - Get list of available credential keys
+
+**Note**: Credentials are automatically loaded and validated by the ai-rooms service. Your addon only needs to define what secrets it requires and how to use them.
+
+## Actions Development
+
+Actions are the core functionality of your addon. Each action is a function that processes inputs and returns standardized outputs.
+
+### Action Structure
+
+Every action must follow this structure:
+
+```python
+from loguru import logger
+from typing import Optional
+from pydantic import BaseModel
+
+from .base import ActionResponse, OutputBase, TokensSchema
+from template_rooms_pkg.configuration import CustomAddonConfig
+from template_rooms_pkg.services.credentials import CredentialsRegistry
+
+class ActionInput(BaseModel):
+    param1: str
+    param2: Optional[str] = None
+
+class ActionOutput(OutputBase):
+    result: str
+    data: Optional[dict] = None
+
+def your_action_name(config: CustomAddonConfig, param1: str, param2: str = None) -> ActionResponse:
+    logger.debug(f"Executing your_action_name with params: {param1}, {param2}")
+    
+    # Access credentials if needed
+    credentials = CredentialsRegistry()
+    api_key = credentials.get("api_key")
+    
+    # Your action logic here
+    result = f"Processed {param1}"
+    
+    # Create response
+    tokens = TokensSchema(stepAmount=100, totalCurrentAmount=1000)
+    output = ActionOutput(result=result, data={"processed": True})
+    
+    return ActionResponse(
+        output=output,
+        tokens=tokens,
+        message="Action completed successfully",
+        code=200
+    )
+```
+
+### Required Components
+
+1. **ActionInput** (Pydantic model): Defines expected input parameters
+2. **ActionOutput** (inherits from `OutputBase`): Defines the structure of returned data
+3. **Action function**: Must match the filename (e.g., `your_action_name.py` → `your_action_name()` function)
+
+### ActionResponse Schema
+
+Every action must return an `ActionResponse` with:
+
+- `output: OutputBase` - Your custom output data
+- `tokens: TokensSchema` - Token usage information:
+  - `stepAmount: int` - Tokens used by this action
+  - `totalCurrentAmount: int` - Total tokens used so far
+- `message: Optional[str]` - Human-readable status message
+- `code: Optional[int]` - HTTP-style status code (200 = success)
+
+### Adding Actions to Addon
+
+Register your actions in the main addon class (`addon.py`):
+
+```python
+from .actions.your_action_name import your_action_name
+
+class TemplateRoomsAddon:
+    def your_action_name(self, param1: str, param2: str = None) -> dict:
+        return your_action_name(self.config, param1=param1, param2=param2)
+```
+
+### Action File Naming
+
+- Action files should be named with snake_case: `my_action.py`
+- The function inside must have the same name: `def my_action(...)`
+- Register in addon class with the same name: `def my_action(...)`
+
 ## Development
 
 ### Code Quality Tools
