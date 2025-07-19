@@ -15,12 +15,9 @@ class TemplateRoomsAddon:
         self.modules = ["actions", "configuration", "memory", "services", "storage", "tools", "utils"]
         self.config = {}
 
-    # try pydantic model validation ?
     # add your actions here  
     def example(self, param1: str, param2: str) -> dict:#-> ActionResponse:
-        # create ActionInput object with params
-        # inputs = ActionInput(param1=param1, param2=param2)
-        return example(param1=param1, param2=param2)
+        return example(self.config, param1=param1, param2=param2)
 
     def test(self) -> bool:
         """
@@ -47,9 +44,7 @@ class TemplateRoomsAddon:
                         logger.info(f"Component {component_name} type: {type(component)}")
                         if callable(component):
                             try:
-                                # Skip Pydantic models and specific known models that require parameters
                                 skip_instantiation = False
-                                
                                 try:
                                     from pydantic import BaseModel
                                     if hasattr(component, '__bases__') and any(
@@ -59,7 +54,6 @@ class TemplateRoomsAddon:
                                         skip_instantiation = True
                                 except (ImportError, TypeError):
                                     pass
-                                
                                 # Also skip known models that require parameters
                                 if component_name in ['ActionInput', 'ActionOutput']:
                                     logger.info(f"Component {component_name} requires parameters, skipping instantiation")
@@ -73,7 +67,6 @@ class TemplateRoomsAddon:
                             except Exception as e:
                                 logger.warning(f"Component {component_name}() failed: {e}")
                                 logger.error(f"Exception details for {component_name}: {str(e)}")
-                                # Re-raise to see the full stack trace
                                 raise e
                 logger.info(f"{component_count} {module_name} loaded correctly, available imports: {', '.join(components)}")
             except ImportError as e:
