@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.28 (2025-07-19)
+
+### Bug Fixes
+
+- Validate input
+  ([`f459114`](https://github.com/synvex-ai/template-rooms-pkg/commit/f4591142cccf78e2b38e4ffdcf74ac2649c63232))
+
+
 ## v1.1.27 (2025-07-18)
 
 ### Bug Fixes
