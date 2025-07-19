@@ -1,7 +1,6 @@
 import importlib
 from loguru import logger
 from .actions.example import example
-from .actions.base import ActionResponse
 
 class TemplateRoomsAddon:
     """
@@ -16,7 +15,7 @@ class TemplateRoomsAddon:
         self.config = {}
 
     # add your actions here  
-    def example(self, param1: str, param2: str) -> ActionResponse:
+    def example(self, param1: str, param2: str) -> dict:
         return example(self.config, param1=param1, param2=param2)
 
     def test(self) -> bool:
