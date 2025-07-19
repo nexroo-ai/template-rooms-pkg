@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.2.2 (2025-07-19)
+
+### Bug Fixes
+
+- Fixing response
+  ([`1d2f30a`](https://github.com/synvex-ai/template-rooms-pkg/commit/1d2f30a4c5cd96091a0687cd34bd918e7c85759d))
+
+
 ## v1.2.1 (2025-07-19)
 
 ### Bug Fixes
