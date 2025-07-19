@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.31 (2025-07-19)
+
+### Bug Fixes
+
+- Skip action input validation
+  ([`9c00048`](https://github.com/synvex-ai/template-rooms-pkg/commit/9c00048968302e8a794bf368ccf64053efc3f9ef))
+
+
 ## v1.1.30 (2025-07-19)
 
 ### Bug Fixes
