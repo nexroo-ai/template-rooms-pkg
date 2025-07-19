@@ -17,11 +17,9 @@ class TemplateRoomsAddon:
 
     # try pydantic model validation ?
     # add your actions here  
-    def example(param1: str, param2: str) -> dict:#-> ActionResponse:
+    def example(self, param1: str, param2: str) -> dict:#-> ActionResponse:
         # create ActionInput object with params
         inputs = ActionInput(param1=param1, param2=param2)
-        # logger.info(f"exec action with config {self.config}")
-        logger.info(f"exec action with params {inputs.param1}")
         return example(inputs=inputs)
 
     def test(self) -> bool:
@@ -49,10 +47,6 @@ class TemplateRoomsAddon:
                             try:
                                 try:
                                     from pydantic import BaseModel
-                                    if component_name == 'ActionInput':
-                                        logger.debug("Skipping ActionInput instantiation")
-                                        continue
-                                    
                                     if hasattr(component, '__bases__') and any(
                                         issubclass(base, BaseModel) for base in component.__bases__ if isinstance(base, type)
                                     ):
