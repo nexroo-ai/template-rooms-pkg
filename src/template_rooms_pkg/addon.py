@@ -1,6 +1,6 @@
 import importlib
 from loguru import logger
-from .actions.example import example
+from .actions.example import ActionInput, example
 # from .actions.base import ActionResponse
 
 class TemplateRoomsAddon:
@@ -18,7 +18,9 @@ class TemplateRoomsAddon:
     # try pydantic model validation ?
     # add your actions here  
     def example(self, param1: str, param2: str) -> dict:#-> ActionResponse:
-        return example(param1=param1, param2=param2)
+        # create ActionInput object with params
+        inputs = ActionInput(param1=param1, param2=param2)
+        return example(inputs=inputs)
 
     def test(self) -> bool:
         """
