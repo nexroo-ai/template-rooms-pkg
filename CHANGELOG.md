@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.37 (2025-07-19)
+
+### Bug Fixes
+
+- Fixed
+  ([`4517b77`](https://github.com/synvex-ai/template-rooms-pkg/commit/4517b7710507beb67124d560cebc9f42b0fdb93c))
+
+
 ## v1.1.36 (2025-07-19)
 
 ### Bug Fixes
