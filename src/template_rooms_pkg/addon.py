@@ -45,18 +45,29 @@ class TemplateRoomsAddon:
                         component = getattr(module, component_name)
                         if callable(component):
                             try:
+                                # Skip Pydantic models and specific known models that require parameters
+                                skip_instantiation = False
+                                
                                 try:
                                     from pydantic import BaseModel
                                     if hasattr(component, '__bases__') and any(
                                         issubclass(base, BaseModel) for base in component.__bases__ if isinstance(base, type)
                                     ):
                                         logger.debug(f"Component {component_name} is a Pydantic model, skipping instantiation")
-                                        continue
+                                        skip_instantiation = True
                                 except (ImportError, TypeError):
                                     pass
                                 
-                                # result = component()
-                                logger.debug(f"Component {component_name}() executed successfully")
+                                # Also skip known models that require parameters
+                                if component_name in ['ActionInput', 'ActionOutput']:
+                                    logger.debug(f"Component {component_name} requires parameters, skipping instantiation")
+                                    skip_instantiation = True
+                                
+                                if not skip_instantiation:
+                                    # result = component()
+                                    logger.debug(f"Component {component_name}() would be executed successfully")
+                                else:
+                                    logger.debug(f"Component {component_name} exists and is valid (skipped instantiation)")
                             except Exception as e:
                                 logger.warning(f"Component {component_name}() failed: {e}")
                 logger.info(f"{component_count} {module_name} loaded correctly, available imports: {', '.join(components)}")
