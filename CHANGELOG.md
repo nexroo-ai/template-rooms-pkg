@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.2.1 (2025-07-19)
+
+### Bug Fixes
+
+- Skip actionresponse in test
+  ([`65c194b`](https://github.com/synvex-ai/template-rooms-pkg/commit/65c194bb3b67f9796d9be6077dad5677d6247650))
+
+
 ## v1.2.0 (2025-07-19)
 
 ### Features
