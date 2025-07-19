@@ -110,6 +110,8 @@ class TemplateRoomsAddon:
         Returns:
             bool: True if credentials are loaded successfully, False otherwise
         """
+        logger.debug("Loading credentials...")
+        logger.debug(f"Received credentials: {kwargs}")
         try:
             if self.config and hasattr(self.config, 'secrets'):
                 required_secrets = list(self.config.secrets.keys())
