@@ -20,7 +20,9 @@ class TemplateRoomsAddon:
     def example(self, param1: str, param2: str) -> dict:#-> ActionResponse:
         # create ActionInput object with params
         inputs = ActionInput(param1=param1, param2=param2)
-        return example(config=self.config, inputs=inputs)
+        logger.info(f"exec action with config {self.config}")
+        logger.info(f"exec action with params {inputs.param1}")
+        return example(inputs=inputs)
 
     def test(self) -> bool:
         """
