@@ -41,8 +41,10 @@ class TemplateRoomsAddon:
                 component_count = len(components)
                 total_components += component_count
                 for component_name in components:
+                    logger.info(f"Processing component: {component_name}")
                     if hasattr(module, component_name):
                         component = getattr(module, component_name)
+                        logger.info(f"Component {component_name} type: {type(component)}")
                         if callable(component):
                             try:
                                 # Skip Pydantic models and specific known models that require parameters
@@ -53,23 +55,26 @@ class TemplateRoomsAddon:
                                     if hasattr(component, '__bases__') and any(
                                         issubclass(base, BaseModel) for base in component.__bases__ if isinstance(base, type)
                                     ):
-                                        logger.debug(f"Component {component_name} is a Pydantic model, skipping instantiation")
+                                        logger.info(f"Component {component_name} is a Pydantic model, skipping instantiation")
                                         skip_instantiation = True
                                 except (ImportError, TypeError):
                                     pass
                                 
                                 # Also skip known models that require parameters
                                 if component_name in ['ActionInput', 'ActionOutput']:
-                                    logger.debug(f"Component {component_name} requires parameters, skipping instantiation")
+                                    logger.info(f"Component {component_name} requires parameters, skipping instantiation")
                                     skip_instantiation = True
                                 
                                 if not skip_instantiation:
                                     # result = component()
-                                    logger.debug(f"Component {component_name}() would be executed successfully")
+                                    logger.info(f"Component {component_name}() would be executed successfully")
                                 else:
-                                    logger.debug(f"Component {component_name} exists and is valid (skipped instantiation)")
+                                    logger.info(f"Component {component_name} exists and is valid (skipped instantiation)")
                             except Exception as e:
                                 logger.warning(f"Component {component_name}() failed: {e}")
+                                logger.error(f"Exception details for {component_name}: {str(e)}")
+                                # Re-raise to see the full stack trace
+                                raise e
                 logger.info(f"{component_count} {module_name} loaded correctly, available imports: {', '.join(components)}")
             except ImportError as e:
                 logger.error(f"Failed to import {module_name}: {e}")
