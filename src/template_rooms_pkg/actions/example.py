@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 from .base import ActionResponse, OutputBase, TokensSchema
+from template_rooms_pkg.configuration import CustomAddonConfig
 
 class ActionInput(BaseModel):
     param1: str
@@ -15,7 +16,7 @@ class ActionOutput(OutputBase):
 
 # entrypoint is always the same name as the action file name.
 # the script use the function name, to simplify we will use the same name as the file.
-def example(param1: str, param2: str) -> ActionResponse:
+def example(config: CustomAddonConfig, param1: str, param2: str) -> ActionResponse:
     # if not isinstance(inputs, ActionInput):
     #     raise ValueError("Invalid input type. Expected ActionInput.")
     logger.debug("Template rooms package - Example action executed successfully!")
