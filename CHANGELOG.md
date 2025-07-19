@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.3.0 (2025-07-19)
+
+### Features
+
+- Secrets manage service
+  ([`900659a`](https://github.com/synvex-ai/template-rooms-pkg/commit/900659a9744639ba1b63cd2a7ad17a5a92c9c9e9))
+
+
 ## v1.2.3 (2025-07-19)
 
 ### Bug Fixes
