@@ -49,6 +49,9 @@ class TemplateRoomsAddon:
                             try:
                                 try:
                                     from pydantic import BaseModel
+                                    if component_name == 'ActionInput':
+                                        logger.debug("Skipping ActionInput instantiation")
+                                        continue
                                     if hasattr(component, '__bases__') and any(
                                         issubclass(base, BaseModel) for base in component.__bases__ if isinstance(base, type)
                                     ):
