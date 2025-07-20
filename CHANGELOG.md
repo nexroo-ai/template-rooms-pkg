@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.3.2 (2025-07-20)
+
+### Bug Fixes
+
+- Test data passing
+  ([`9670a9d`](https://github.com/synvex-ai/template-rooms-pkg/commit/9670a9dd31f116f01d9dac1ce48ceeafff94dd28))
+
+
 ## v1.3.1 (2025-07-19)
 
 ### Bug Fixes
