@@ -28,5 +28,5 @@ def example(config: CustomAddonConfig, param1: str, param2: str) -> ActionRespon
     tokens = TokensSchema(stepAmount=2000, totalCurrentAmount=16236)
     message = "Action executed successfully"
     code = 200
-    output = ActionOutput(data={"foo": "bar"})
+    output = ActionOutput(data={"processed": param1 + "- processed -"})
     return ActionResponse(output=output, tokens=tokens, message=message, code=code)
