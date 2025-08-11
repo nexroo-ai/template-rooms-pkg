@@ -57,12 +57,6 @@ jobs:
       - name: Run tests with coverage
         run: poetry run pytest tests/ --cov=src/template_rooms_pkg --cov-report=term-missing --cov-report=xml --cov-fail-under=85
 
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v5
-        if: always()
-        with:
-          file: ./coverage.xml
-          fail_ci_if_error: true
 
   release:
     name: Release
