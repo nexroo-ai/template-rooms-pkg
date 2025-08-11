@@ -1,4 +1,5 @@
 from pydantic import Field, model_validator
+
 from .baseconfig import BaseAddonConfig
 
 
@@ -7,7 +8,7 @@ class CustomAddonConfig(BaseAddonConfig):
     host: str = Field(..., description="Database host")
     database: str = Field(..., description="Database name")
     port: int = Field(5432, description="Database port")
-    
+
     @model_validator(mode='after')
     def validate_db_secrets(self):
         required_secrets = ["db_password", "db_user"]

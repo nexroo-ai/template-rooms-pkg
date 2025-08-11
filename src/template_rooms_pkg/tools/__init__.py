@@ -1,3 +1,3 @@
-from .example import demo_tool
+from .base import ToolRegistry
 
-__all__ = ["demo_tool"]
+__all__ = ["ToolRegistry"]
