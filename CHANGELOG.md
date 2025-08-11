@@ -2,6 +2,22 @@
 
 <!-- version list -->
 
+## v2.0.0 (2025-08-11)
+
+### Bug Fixes
+
+- No push codecov
+  ([`fad7f58`](https://github.com/synvex-ai/template-rooms-pkg/commit/fad7f580923e4f6d0ea09c35e97e0c4d15178659))
+
+### Features
+
+- **v2**: Pytests, type, tools
+  ([`3361970`](https://github.com/synvex-ai/template-rooms-pkg/commit/33619708c76f3bb5ecbb410e6b88e1f50d979f76))
+
+- **v2**: Template doc
+  ([`dd28e3b`](https://github.com/synvex-ai/template-rooms-pkg/commit/dd28e3b24f22bcb75d2dd6c0c9d6269c184eabe3))
+
+
 ## v1.3.2 (2025-07-20)
 
 ### Bug Fixes
