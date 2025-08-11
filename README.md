@@ -45,9 +45,13 @@ To create a new addon package using this template:
 4. **Create configuration schema:**
    - Define your addon's configuration schema in `configuration/` directory
    - Inherit from `BaseAddonConfig` for validation
-5. **Update documentation:**
-   - Modify this README.md with your addon's specific information
-   - Update the CHANGELOG.md
+5. **Set up addon type**
+   - In addon.py, set the root "type" to your rooms addon type (agent, storage, communication...)
+6. **If AI agent set up the tools hook**
+7. **Update documentation:**
+   - Copy the TEMPLATE_README.md and fill with your addon specific informations
+   - Replace this current README.md by renaming your TEMPLATE_README.md to README.md
+   - You can delete changelog to reset
 
 ### Required File Structure
 ```
