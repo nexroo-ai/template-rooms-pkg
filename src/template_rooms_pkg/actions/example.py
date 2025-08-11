@@ -1,10 +1,13 @@
-from loguru import logger
 from typing import Optional
+
+from loguru import logger
 from pydantic import BaseModel
 
-from .base import ActionResponse, OutputBase, TokensSchema
 from template_rooms_pkg.configuration import CustomAddonConfig
 from template_rooms_pkg.services.credentials import CredentialsRegistry
+
+from .base import ActionResponse, OutputBase, TokensSchema
+
 
 class ActionInput(BaseModel):
     param1: str
@@ -24,7 +27,7 @@ def example(config: CustomAddonConfig, param1: str, param2: str) -> ActionRespon
     credentials = CredentialsRegistry()
     if credentials.has("db_user"):
         logger.debug(f"Database user available: {credentials.get('db_user')}")
-    
+
     tokens = TokensSchema(stepAmount=2000, totalCurrentAmount=16236)
     message = "Action executed successfully"
     code = 200
