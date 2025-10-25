@@ -197,22 +197,34 @@ When your addon requires secrets (API keys, passwords, etc.), configure them in 
 
 ### 1. Define Required Secrets
 
-Use the `@model_validator` to specify which secrets your addon needs:
+Use the `RequiredSecretsBase` class to define which secrets your addon needs:
 
 ```python
 from pydantic import Field, model_validator
-from .baseconfig import BaseAddonConfig
+from .baseconfig import BaseAddonConfig, RequiredSecretsBase
+
+class CustomRequiredSecrets(RequiredSecretsBase):
+    api_key: str = Field(..., description="API key environment variable name")
+    db_password: str = Field(..., description="Database password environment variable name")
+    db_user: str = Field(..., description="Database user environment variable name")
 
 class CustomAddonConfig(BaseAddonConfig):
-    type: str = Field("your_addon_type", description="Your addon type")
-    
-    # Your addon fields...
+    # Your addon configuration fields...
     host: str = Field(..., description="Database host")
-    
+    port: int = Field(5432, description="Database port")
+
+    @classmethod
+    def get_required_secrets(cls) -> CustomRequiredSecrets:
+        return CustomRequiredSecrets(
+            api_key="api_key",
+            db_password="db_password",
+            db_user="db_user"
+        )
+
     @model_validator(mode='after')
     def validate_secrets(self):
-        # Define required secrets for your addon
-        required_secrets = ["db_password", "db_user", "api_key"]
+        required_secrets_config = self.get_required_secrets()
+        required_secrets = list(required_secrets_config.model_fields.keys())
         missing = [s for s in required_secrets if s not in self.secrets]
         if missing:
             raise ValueError(f"Missing required secrets: {missing}")
