@@ -38,72 +38,75 @@ class TestBaseAddonConfig:
 class TestCustomAddonConfig:
     def test_custom_config_creation_success(self):
         config = CustomAddonConfig(
-            id="test_db_addon_id",
-            name="test_db_addon",
-            description="Test database addon",
-            host="localhost",
-            database="testdb",
-            secrets={"db_password": "secret", "db_user": "user"}
+            id="test_addon_id",
+            type="example",
+            name="test_addon",
+            description="Test addon",
+            example_param1="value1",
+            example_param2="custom_value",
+            example_param3=9999,
+            secrets={"example_api_key": "key123", "example_secret": "secret456"}
         )
 
-        assert config.id == "test_db_addon_id"
-        assert config.name == "test_db_addon"
-        assert config.type == "database"
-        assert config.host == "localhost"
-        assert config.database == "testdb"
-        assert config.port == 5432
+        assert config.id == "test_addon_id"
+        assert config.name == "test_addon"
+        assert config.type == "example"
+        assert config.example_param1 == "value1"
+        assert config.example_param2 == "custom_value"
+        assert config.example_param3 == 9999
 
-    def test_custom_config_with_custom_port(self):
+    def test_custom_config_with_defaults(self):
         config = CustomAddonConfig(
-            id="test_db_addon_id",
-            name="test_db_addon",
-            description="Test database addon",
-            host="localhost",
-            database="testdb",
-            port=3306,
-            secrets={"db_password": "secret", "db_user": "user"}
+            id="test_addon_id",
+            type="example",
+            name="test_addon",
+            description="Test addon",
+            example_param1="value1",
+            secrets={"example_api_key": "key123", "example_secret": "secret456"}
         )
 
-        assert config.port == 3306
+        assert config.example_param2 == "default_value"
+        assert config.example_param3 == 5432
 
-    def test_custom_config_missing_db_password(self):
-        with pytest.raises(ValidationError, match="Missing database secrets"):
+    def test_custom_config_missing_api_key(self):
+        with pytest.raises(ValidationError, match="Missing required secrets"):
             CustomAddonConfig(
-                id="test_db_addon_id",
-                name="test_db_addon",
-                description="Test database addon",
-                host="localhost",
-                database="testdb",
-                secrets={"db_user": "user"}
+                id="test_addon_id",
+                type="example",
+                name="test_addon",
+                description="Test addon",
+                example_param1="value1",
+                secrets={"example_secret": "secret456"}
             )
 
-    def test_custom_config_missing_db_user(self):
-        with pytest.raises(ValidationError, match="Missing database secrets"):
+    def test_custom_config_missing_secret(self):
+        with pytest.raises(ValidationError, match="Missing required secrets"):
             CustomAddonConfig(
-                id="test_db_addon_id",
-                name="test_db_addon",
-                description="Test database addon",
-                host="localhost",
-                database="testdb",
-                secrets={"db_password": "secret"}
+                id="test_addon_id",
+                type="example",
+                name="test_addon",
+                description="Test addon",
+                example_param1="value1",
+                secrets={"example_api_key": "key123"}
             )
 
     def test_custom_config_missing_both_secrets(self):
-        with pytest.raises(ValidationError, match="Missing database secrets"):
+        with pytest.raises(ValidationError, match="Missing required secrets"):
             CustomAddonConfig(
-                id="test_db_addon_id",
-                name="test_db_addon",
-                description="Test database addon",
-                host="localhost",
-                database="testdb",
+                id="test_addon_id",
+                type="example",
+                name="test_addon",
+                description="Test addon",
+                example_param1="value1",
                 secrets={}
             )
 
     def test_custom_config_missing_required_fields(self):
         with pytest.raises(ValidationError):
             CustomAddonConfig(
-                id="test_db_addon_id",
-                name="test_db_addon",
-                description="Test database addon",
-                secrets={"db_password": "secret", "db_user": "user"}
+                id="test_addon_id",
+                type="example",
+                name="test_addon",
+                description="Test addon",
+                secrets={"example_api_key": "key123", "example_secret": "secret456"}
             )
