@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v2.0.3 (2025-10-25)
+
+### Bug Fixes
+
+- Default min pytest coverage 45perc
+  ([`1396bb0`](https://github.com/nexroo-ai/template-rooms-pkg/commit/1396bb06cb34b6e7329ed6a2366813aa454e7d04))
+
+
 ## v2.0.2 (2025-10-25)
 
 ### Bug Fixes
