@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v2.0.2 (2025-10-25)
+
+### Bug Fixes
+
+- Tests
+  ([`cd4db16`](https://github.com/nexroo-ai/template-rooms-pkg/commit/cd4db1645b286a37e3104700e1b29b0d3ed5baa9))
+
+- **secrets**: Class defined secrets
+  ([`7c70f4c`](https://github.com/nexroo-ai/template-rooms-pkg/commit/7c70f4ccede41e553360322ed552b391a606871c))
+
+
 ## v2.0.1 (2025-08-11)
 
 ### Bug Fixes
